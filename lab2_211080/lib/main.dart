@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'screens/main_screen.dart';
-import 'screens/random_joke_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const JokeApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class JokeApp extends StatelessWidget {
+  const JokeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Jokes App',
+      title: 'Joke App',
       theme: ThemeData(primarySwatch: Colors.blue),
-      routes: {
-        '/': (context) => const MainScreen(),
-        '/random-joke': (context) => const RandomJokeScreen(),
-      },
+      home: const MainScreen(),
     );
   }
 }

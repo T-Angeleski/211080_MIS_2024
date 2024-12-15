@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lab2_211080/models/joke.dart';
 
-class ApiService {
+class JokeService {
   static const String baseUrl = "https://official-joke-api.appspot.com";
 
   static Future<List<String>> fetchJokeTypes() async {
@@ -13,20 +14,20 @@ class ApiService {
     }
   }
 
-  static Future<List<Map<String, dynamic>>> fetchJokesByType(
-      String type) async {
+  static Future<List<Joke>> fetchJokesByType(String type) async {
     final response = await http.get(Uri.parse("$baseUrl/jokes/$type/ten"));
     if (response.statusCode == 200) {
-      return List<Map<String, dynamic>>.from(json.decode(response.body));
+      final List jokesJson = json.decode(response.body);
+      return jokesJson.map((json) => Joke.fromJson(json)).toList();
     } else {
       throw Exception("Failed to load jokes for type $type");
     }
   }
 
-  static Future<Map<String, dynamic>> fetchRandomJoke() async {
+  static Future<Joke> fetchRandomJoke() async {
     final response = await http.get(Uri.parse("$baseUrl/random_joke"));
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      return Joke.fromJson(json.decode(response.body));
     } else {
       throw Exception("Failed to load random joke");
     }

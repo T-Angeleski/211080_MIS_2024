@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab2_211080/models/joke.dart';
 import 'package:lab2_211080/services/api_services.dart';
 
 class RandomJokeScreen extends StatelessWidget {
@@ -8,8 +9,8 @@ class RandomJokeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Random Joke")),
-      body: FutureBuilder<Map<String, dynamic>>(
-        future: ApiService.fetchRandomJoke(),
+      body: FutureBuilder<Joke>(
+        future: JokeService.fetchRandomJoke(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -23,13 +24,12 @@ class RandomJokeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(joke['setup'],
+                  Text(joke.setup, style: const TextStyle(fontSize: 18)),
+                  const SizedBox(height: 20),
+                  Text(joke.punchline,
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 10),
-                  Text(joke['punchline'], style: const TextStyle(fontSize: 16)),
+                          fontSize: 22, fontWeight: FontWeight.bold)),
                 ],
               ),
             );

@@ -1,22 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lab2_211080/services/api_services.dart';
+import 'package:lab2_211080/widgets/joke_card.dart';
 import 'joke_type_screen.dart';
+import 'random_joke_screen.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
-
-  @override
-  _MainScreenState createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  late Future<List<String>> _jokeTypes;
-
-  @override
-  void initState() {
-    super.initState();
-    _jokeTypes = ApiService.fetchJokeTypes();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +14,19 @@ class _MainScreenState extends State<MainScreen> {
         title: const Text("Joke Types"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.sentiment_very_satisfied),
+            icon: const Icon(Icons.casino),
             onPressed: () {
-              Navigator.pushNamed(context, '/random-joke');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const RandomJokeScreen()),
+              );
             },
           ),
         ],
       ),
       body: FutureBuilder<List<String>>(
-        future: _jokeTypes,
+        future: JokeService.fetchJokeTypes(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -42,23 +35,20 @@ class _MainScreenState extends State<MainScreen> {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text("No joke types found"));
           } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final jokeType = snapshot.data![index];
-                return ListTile(
-                  title: Text(jokeType),
+            return ListView(
+              children: snapshot.data!.map((type) {
+                return JokeCard(
+                  title: type,
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            JokeTypeScreen(jokeType: jokeType),
+                        builder: (context) => JokeTypeScreen(jokeType: type),
                       ),
                     );
                   },
                 );
-              },
+              }).toList(),
             );
           }
         },
