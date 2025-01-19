@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -40,8 +41,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDt6oT1pusOwIkcWRCV-oO-fBK20yy8eV0',
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_WEB_API_KEY'] ?? '',
     appId: '1:791506778320:web:7d1292d65cc799eeab46d5',
     messagingSenderId: '791506778320',
     projectId: 'mis-jokes-project',
@@ -49,16 +50,16 @@ class DefaultFirebaseOptions {
     storageBucket: 'mis-jokes-project.firebasestorage.app',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDy5o0UfLEcg-mpP9C2Y6-oq_lPglMxSE4',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_ANDROID_API_KEY'] ?? '',
     appId: '1:791506778320:android:7e9afa74ea17fb6bab46d5',
     messagingSenderId: '791506778320',
     projectId: 'mis-jokes-project',
     storageBucket: 'mis-jokes-project.firebasestorage.app',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBNaBwEtjfERamA8ab5shvrt0C33ZgH330',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_IOS_API_KEY'] ?? '',
     appId: '1:791506778320:ios:626b86510fd53160ab46d5',
     messagingSenderId: '791506778320',
     projectId: 'mis-jokes-project',
@@ -66,8 +67,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.lab2211080',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBNaBwEtjfERamA8ab5shvrt0C33ZgH330',
+  static FirebaseOptions macos = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_MACOS_API_KEY'] ?? '',
     appId: '1:791506778320:ios:626b86510fd53160ab46d5',
     messagingSenderId: '791506778320',
     projectId: 'mis-jokes-project',
@@ -75,13 +76,12 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.lab2211080',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDt6oT1pusOwIkcWRCV-oO-fBK20yy8eV0',
+  static FirebaseOptions windows = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_WINDOWS_API_KEY'] ?? '',
     appId: '1:791506778320:web:1fd4efeb3e2de8d0ab46d5',
     messagingSenderId: '791506778320',
     projectId: 'mis-jokes-project',
     authDomain: 'mis-jokes-project.firebaseapp.com',
     storageBucket: 'mis-jokes-project.firebasestorage.app',
   );
-
 }

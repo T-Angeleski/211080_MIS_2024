@@ -15,6 +15,7 @@ bin/internal/engine.version
 .buildlog/
 .history
 .svn/
+.env
 
 # IntelliJ related
 *.iml
